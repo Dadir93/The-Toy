@@ -1,0 +1,40 @@
+#challenge1 {
+    border: 2px solid #3498db;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#challenge2 {
+    border: 2px solid #e74c3c;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#challenge3 {
+    border: 2px solid #2ecc71; 
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+button {
+    margin-bottom: 20px;
+}
+
+#resultContainer {
+    margin-top: 10px;
+}
+
+.result {
+    margin-bottom: 10px;
+    border: 1px solid #ddd; 
+    padding: 5px;
+}

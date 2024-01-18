@@ -1,17 +1,29 @@
-function studentMarks() {
-    if (0 <= mark <= 100) {
-        if (mark > 79) {
-            grade = "A";
-        }
-
-    } else if (mark >= 60) {
-        grade = "B";
-    } else if (mark >= 59) {
-        grade = "C";
-    } else if (mark >= 49) {
-        grade = "D";
-    } else if (mark < 40) {
-        grade = "E";
+function calculateGrade(marks) {
+    if (marks > 79) {
+        return "A";
+    } else if (marks >= 60) {
+        return "B";
+    } else if (marks >= 50) {
+        return "C";
+    } else if (marks >= 40) {
+        return "D";
+    } else {
+        return "E";
     }
+}
 
+function runGradeGenerator() {
+    const marksInput = document.getElementById('studentMarks');
+    const resultContainer = document.getElementById('resultContainer1');
+    resultContainer.innerHTML = ''; 
+
+    const marks = parseFloat(marksInput.value);
+    const grade = calculateGrade(marks);
+    const result = `Marks: ${marks}, Grade: ${grade}`;
+
+    const resultDiv = document.createElement('div');
+    resultDiv.textContent = result;
+    resultContainer.appendChild(resultDiv);
+
+    console.log(result);
 }
