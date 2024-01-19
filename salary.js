@@ -1,63 +1,58 @@
-function calculateNetSalary() {
-    // Get user inputs
-    const basicSalaryInput = document.getElementById('basicSalary');
-    const benefitsInput = document.getElementById('benefits');
+function speedCheck() {
+    const speedInput = document.getElementById('carSpeed');
+    const resultContainer = document.getElementById('resultContainer2');
+    const suspensionMessage = document.getElementById('suspensionMessage');
+    const totalPointsContainer = document.getElementById('totalPoints');
+    resultContainer.innerHTML = '';
+    suspensionMessage.innerHTML = '';
+    totalPointsContainer.innerHTML = '';
 
-    const basicSalary = parseFloat(basicSalaryInput.value);
-    const benefits = parseFloat(benefitsInput.value);
+    const speeds = speedInput.value.split(',').map(speed => parseFloat(speed.trim()));
+    const speedLimit = 70;
+    const demeritPointsPer5Km = 1;
 
-    // Input validation
-    if (isNaN(basicSalary) || isNaN(benefits) || basicSalary < 0 || benefits < 0) {
-        alert("Please enter valid non-negative numeric values for Basic Salary and Benefits.");
-        return;
-    }
+    let totalDemeritPoints = 0;
 
-    // Constants for PAYE rates
-    const PAYE_RATES = [
-        // ... (same as before)
-    ];
+    speeds.forEach(speed => {
+        if (!isNaN(speed)) {
+            let demeritPoints = 0;
 
-    // Constants for NHIF rates
-    const NHIF_RATES = [
-        // ... (same as before)
-    ];
+            if (speed < 70) {
+                result = `Speed: ${speed}, OK`;
+            } else {
+                demeritPoints = Math.floor((speed - 75) / 5) + 1;
+                result = `Speed: ${speed}, Points: ${demeritPoints}`;
+            }
 
-    // Constants for Affordable Housing Levy
-    const HOUSING_LEVY_RATE = 0.015; // 1.5%
+            totalDemeritPoints += demeritPoints;
 
-    // Calculate gross salary
-    const grossSalary = basicSalary + benefits;
-
-    // Calculate PAYE (tax)
-    let paye = 0;
-    for (const rate of PAYE_RATES) {
-        if (grossSalary > rate.min && grossSalary <= rate.max) {
-            paye = (grossSalary - rate.min) * rate.rate;
-            break;
+            displayResult(result);
         }
+    });
+
+    const totalPointsResult = `Total Demerit Points: ${totalDemeritPoints}`;
+    const totalPointsDiv = document.createElement('div');
+    totalPointsDiv.textContent = totalPointsResult;
+    totalPointsContainer.appendChild(totalPointsDiv);
+    console.log(totalPointsResult);
+
+    if (totalDemeritPoints >= 12) {
+        const suspensionResult = "License suspended";
+        console.log(suspensionResult);
+        displaySuspensionMessage(suspensionResult);
     }
 
-    // Calculate NHIF deductions
-    let nhifDeductions = 0;
-    for (const rate of NHIF_RATES) {
-        if (grossSalary > rate.min && grossSalary <= rate.max) {
-            nhifDeductions = rate.deduction;
-            break;
-        }
+    function displayResult(result) {
+        const resultDiv = document.createElement('div');
+        resultDiv.textContent = result;
+        resultContainer.appendChild(resultDiv);
+        console.log(result);
     }
 
-    // Calculate Affordable Housing Levy
-    const housingLevy = grossSalary * HOUSING_LEVY_RATE;
-
-    // Calculate net salary
-    const netSalary = grossSalary - paye - nhifDeductions - housingLevy;
-
-    // Update the results on the webpage
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = `
-        <p>Gross Salary: Ksh ${grossSalary}</p>
-        <p>PAYE (Tax): Ksh ${paye}</p>
-        <p>NHIF Deductions: Ksh ${nhifDeductions}</p>
-        <p>Affordable Housing Levy: Ksh ${housingLevy}</p>
-        <p>Net Salary: Ksh ${netSalary}</p>`;
+    function displaySuspensionMessage(message) {
+        const suspensionDiv = document.createElement('div');
+        suspensionDiv.textContent = message;
+        suspensionMessage.appendChild(suspensionDiv);
+        console.log(message);
+    }
 }

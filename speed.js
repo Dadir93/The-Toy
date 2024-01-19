@@ -3,8 +3,10 @@ function speedCheck() {
     const speedInput = document.getElementById('carSpeed');
     const resultContainer = document.getElementById('resultContainer2');
     const suspensionMessage = document.getElementById('suspensionMessage');
+    const totalPointsContainer = document.getElementById('totalPoints');
     resultContainer.innerHTML = '';
     suspensionMessage.innerHTML = '';
+    totalPointsContainer.innerHTML = '';
 
     const speeds = speedInput.value.split(',').map(speed => parseFloat(speed.trim()));
     const speedLimit = 70;
@@ -14,19 +16,18 @@ function speedCheck() {
 
     speeds.forEach(speed => {
         if (!isNaN(speed)) {
-            if (speed > speedLimit) {
-                const demeritPoints = Math.floor((speed - speedLimit) / 5);
-                totalDemeritPoints += demeritPoints;
+            let demeritPoints = 0;
 
-                let result = `Speed: ${speed}, Points: ${demeritPoints}`;
-                if (demeritPoints === 0) {
-                    result += ", OK";
-                }
-                displayResult(result);
+            if (speed < 70) {
+                result = `Speed: ${speed}, OK`;
             } else {
-                const result = `Speed: ${speed}, Points: 0, OK`;
-                displayResult(result);
+                demeritPoints = Math.floor((speed - 75) / 5) + 1;
+                result = `Speed: ${speed}, Points: ${demeritPoints}`;
             }
+
+            totalDemeritPoints += demeritPoints;
+
+            displayResult(result);
         }
     });
 
@@ -35,6 +36,13 @@ function speedCheck() {
         console.log(suspensionResult);
         displaySuspensionMessage(suspensionResult);
     }
+
+    // Display total demerit points
+    const totalPointsResult = `Total Demerit Points: ${totalDemeritPoints}`;
+    const totalPointsDiv = document.createElement('div');
+    totalPointsDiv.textContent = totalPointsResult;
+    totalPointsContainer.appendChild(totalPointsDiv);
+    console.log(totalPointsResult);
 
     function displayResult(result) {
         const resultDiv = document.createElement('div');
