@@ -1,35 +1,52 @@
 // speedDetector.js
 function speedCheck() {
-  const speedInput = document.getElementById('carSpeed');
-  const resultContainer = document.getElementById('resultContainer2');
-  resultContainer.innerHTML = ''; 
+    const speedInput = document.getElementById('carSpeed');
+    const resultContainer = document.getElementById('resultContainer2');
+    const suspensionMessage = document.getElementById('suspensionMessage');
+    resultContainer.innerHTML = '';
+    suspensionMessage.innerHTML = '';
 
-  const speed = parseFloat(speedInput.value);
-  const speedLimit = 70;
-  const demeritPointsPer5Km = 1;
+    const speeds = speedInput.value.split(',').map(speed => parseFloat(speed.trim()));
+    const speedLimit = 70;
+    const demeritPointsPer5Km = 1;
 
-  if (speed <= speedLimit) {
-      const result = "Points: 0";
-      console.log(result);
-      displayResult(result);
-  } else {
-      const demeritPoints = Math.floor((speed - speedLimit) / 5);
-      const result = `Points: ${demeritPoints}`;
+    let totalDemeritPoints = 0;
 
-      displayResult(result);
+    speeds.forEach(speed => {
+        if (!isNaN(speed)) {
+            if (speed > speedLimit) {
+                const demeritPoints = Math.floor((speed - speedLimit) / 5);
+                totalDemeritPoints += demeritPoints;
 
-      if (demeritPoints > 12) {
-          const suspensionResult = "License suspended";
-          console.log(suspensionResult);
-          displayResult(suspensionResult);
-      }
-  }
+                let result = `Speed: ${speed}, Points: ${demeritPoints}`;
+                if (demeritPoints === 0) {
+                    result += ", OK";
+                }
+                displayResult(result);
+            } else {
+                const result = `Speed: ${speed}, Points: 0, OK`;
+                displayResult(result);
+            }
+        }
+    });
 
-  function displayResult(result) {
-      const resultDiv = document.createElement('div');
-      resultDiv.textContent = result;
-      resultContainer.appendChild(resultDiv);
+    if (totalDemeritPoints > 12) {
+        const suspensionResult = "License suspended";
+        console.log(suspensionResult);
+        displaySuspensionMessage(suspensionResult);
+    }
 
-      console.log(result);
-  }
+    function displayResult(result) {
+        const resultDiv = document.createElement('div');
+        resultDiv.textContent = result;
+        resultContainer.appendChild(resultDiv);
+        console.log(result);
+    }
+
+    function displaySuspensionMessage(message) {
+        const suspensionDiv = document.createElement('div');
+        suspensionDiv.textContent = message;
+        suspensionMessage.appendChild(suspensionDiv);
+        console.log(message);
+    }
 }

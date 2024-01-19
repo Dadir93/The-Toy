@@ -15,15 +15,33 @@ function calculateGrade(marks) {
 function runGradeGenerator() {
     const marksInput = document.getElementById('studentMarks');
     const resultContainer = document.getElementById('resultContainer1');
-    resultContainer.innerHTML = ''; 
+    const averageContainer = document.getElementById('averageContainer');
+    
+    resultContainer.innerHTML = '';
+    averageContainer.innerHTML = '';
 
-    const marks = parseFloat(marksInput.value);
-    const grade = calculateGrade(marks);
-    const result = `Marks: ${marks}, Grade: ${grade}`;
+    const marksList = marksInput.value.split(',').map(mark => parseFloat(mark.trim()));
 
-    const resultDiv = document.createElement('div');
-    resultDiv.textContent = result;
-    resultContainer.appendChild(resultDiv);
+    let totalMarks = 0;
 
-    console.log(result);
+    marksList.forEach((marks, index) => {
+        const grade = calculateGrade(marks);
+        const result = `Marks ${index + 1}: ${marks}, Grade: ${grade}`;
+
+        const resultDiv = document.createElement('div');
+        resultDiv.textContent = result;
+        resultContainer.appendChild(resultDiv);
+
+        totalMarks += marks;
+    });
+
+    const averageMarks = totalMarks / marksList.length;
+    const averageGrade = calculateGrade(averageMarks);
+    const averageResult = `Average Marks: ${averageMarks.toFixed(2)}, Average Grade: ${averageGrade}`;
+
+    const averageDiv = document.createElement('div');
+    averageDiv.textContent = averageResult;
+    averageContainer.appendChild(averageDiv);
+
+    console.log(averageResult);
 }

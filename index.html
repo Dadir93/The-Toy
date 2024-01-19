@@ -9,31 +9,53 @@
 <body>
 
     <div id="challenge1">
-        <h2>Challenge 1: Student Grade Generator</h2>
-        <label for="studentMarks">Enter student marks (0-100): </label>
-        <input type="number" id="studentMarks">
-        <button onclick="runGradeGenerator()">Run Grade Generator</button>
-        <div id="resultContainer1" class="result">
+        <h1>Grade Generator</h1>
+
+        <label for="studentMarks">Enter Student Marks (comma-separated):</label>
+        <input type="text" id="studentMarks" />
+    
+        <button onclick="runGradeGenerator()">Generate Grades</button>
+    
+        <div id="resultContainer1">
+            <!-- Results will be displayed here -->
+        </div>
+    
+        <div id="averageContainer">
+            <!-- Average result will be displayed here -->
         </div>
     </div>
 
     <div id="challenge2">
-        <h2>Challenge 2: Speed Detector</h2>
-        <label for="carSpeed">Enter car speed: </label>
-        <input type="number" id="carSpeed">
+        <h1>Speed Detector</h1>
+
+        <label for="carSpeed">Enter Car Speeds (comma-separated):</label>
+        <input type="text" id="carSpeed" />
+    
         <button onclick="speedCheck()">Check Speed</button>
-        <div id="resultContainer2" class="result">
+    
+        <div id="resultContainer2">
+            <!-- Results will be displayed here -->
+        </div>
+    
+        <div id="suspensionMessage">
+            <!-- License suspension message will be displayed here -->
         </div>
     </div>
 
     <div id="challenge3">
-        <h2>Challenge 3: Net Salary Calculator</h2>
-        <label for="basicSalary">Enter basic salary: </label>
-        <input type="number" id="basicSalary">
-        <label for="benefits">Enter benefits: </label>
-        <input type="number" id="benefits">
-        <button onclick="calculateNetSalary()">Calculate Net Salary</button>
-        <div id="resultContainer3" class="result">
+        <h1>Net Salary Calculator</h1>
+
+        <label for="basicSalary">Enter Basic Salary: Ksh</label>
+        <input type="text" id="basicSalary" />
+    
+        <label for="benefits">Enter Benefits: Ksh</label>
+        <input type="text" id="benefits" />
+    
+        <button onclick="calculateNetSalary()">Calculate</button>
+    
+        <div id="results">
+            <!-- Results will be displayed here -->
+        </div>
         </div>
     </div>
 
